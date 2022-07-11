@@ -10,7 +10,8 @@
     <style>
         body{
             background: #e3d6c8;
-            font-family: "Montserrat Subrayada", sans-serif;
+            font-family: "Century Gothic", sans-serif;
+            font-weight: bold;
         }
         .main{
             border: solid 5px #371005;
@@ -31,12 +32,32 @@
             list-style: none;
             margin: .5rem .5rem 0 .5rem;
         }
+        .row{
+            margin: .5rem .5rem
+        }
+        .name{
+            margin: 0 .5rem;
+        }
+        .pic{
+            margin: 0 0;
+        }
+        .list{
+            list-style-type: none;
+            margin-left: .5rem;
+            padding-left: .5rem;
+        }
+        .but{
+            margin: .5rem .5rem;
+            background-color: #371005;
+            color: #b6846b;
+            border-radius: 30px;
+            cursor: pointer;
+        }
         .title{
             color: #371005;
             margin: .5rem 5rem .5rem 5rem;
             border: #371005 solid 3px;
             border-radius: 30px;
-            font-family: "Century Gothic";
             font-size: x-large;
             font-weight: bolder;
             background-color: #b6846b;
@@ -44,16 +65,16 @@
         table{
             justify-content: center;
             border: #371005 3px solid;
-            border-radius: 10px;
+            color: #371005;
+            border-radius:  10px;
             margin: 0 .5rem;
             background-color: #b6846b;
-
+            font-size: large;
         }
         caption{
             margin-left: 10rem;
         }
         .hint{
-            font-family: "Century Gothic";
             display: flex;
             vertical-align: middle;
             margin: 0 1rem ;
@@ -63,6 +84,8 @@
         .img{
             margin-top: .5rem;
         }
+
+
     </style>
 </head>
 <body>
@@ -75,15 +98,29 @@
                 <!--  TODO: Сделать нормальное отображение таблицы  -->
                 <table>
                     <caption class="title" >Инвентарь</caption>
-                    <tr>
+                    <tr class="inventory row">
                         <td>
-                            <p>Sword</p>
+                            <p class="name">Меч</p>
                         </td>
                         <td>
-                            <img src="Assets/Inventory/Sword.png">
+                            <img class="pic" src="Assets/Inventory/Sword.png" height="30px">
                         </td>
                         <td>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, temporibus!</p>
+                            <ul class="list">
+                                <li>Урон:</li>
+                                <li>Скорость:</li>
+                                <li>Дальность:</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="list">
+                                <li>●●●○○</li>
+                                <li>●●●○○</li>
+                                <li>●●●○○</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <button class="but">Выбрать</button>
                         </td>
                     </tr>
                 </table>

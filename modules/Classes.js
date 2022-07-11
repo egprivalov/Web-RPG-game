@@ -58,8 +58,8 @@ class Character extends Sprite{
     // 2 - Налево
     direction = 1;
 
-    constructor(w,h,x,y,ctx, hlth, wpn) {
-        super(w,h,x,y,ctx);
+    constructor(w,h, ctx, hlth, wpn) {
+        super(w,h,0, canvas.offsetHeight-Ground-h,ctx);
         this.health = hlth
         this.weapon = wpn
         this.attackOffset = {
@@ -73,6 +73,9 @@ class Character extends Sprite{
     }
     get_dead(){
         this.is_alive = false
+        location.reload()
+        alert("Вы умерли!!!")
+
     }
     do_attack(enemy){
         if (!this.is_attacking && !this.is_resting){
@@ -80,7 +83,6 @@ class Character extends Sprite{
 
             if (this.attack.is_collide(enemy)){
                 this.attack.deal_damage(enemy)
-                console.log(enemy.health)
             }
 
             setTimeout(()=>{
@@ -119,12 +121,81 @@ class Character extends Sprite{
             this.attack.x = this.x - this.attackOffset.mnsx + this.weapon.area.offset.x
             this.attack.y = this.y - this.attackOffset.y + this.weapon.area.offset.y
         }
+        if (this.health <= 0){
+            this.get_dead()
+        }
     }
 
     draw() {
         super.draw();
         if (this.is_attacking){
             this.attack.draw()
+        }
+    }
+}
+
+class Slime extends Sprite{
+    color = "#00c400";
+    velocity = {
+        x: null,
+        y: null
+    }
+    is_jumping = false
+    can_attack = true
+    is_alive = true
+
+    constructor(w,h, ctx, hlth, dmg) {
+        super(w, h, canvas.offsetWidth-w, canvas.offsetHeight - Ground - h, ctx);
+        this.health = hlth
+        this.damage = dmg
+    }
+
+    update() {
+        if (this.health <= 0){
+            this.is_alive = false
+            location.reload()
+            alert("You killed slime")
+        }
+
+        if (!this.is_jumping){
+            if (this.x + this.width < Player.x){
+                this.velocity = {
+                    x: Math.random() * 10 + 20,
+                    y: -25
+                }
+            }
+            else{
+                this.velocity = {
+                    x: -20 - Math.random() * 10,
+                    y: -25
+                }
+            }
+            this.is_jumping = true
+            setTimeout(()=>{
+                this.is_jumping = false
+            }, 2000)
+        }
+
+        if (Math.abs(this.velocity.x) > 1){
+            this.x += this.velocity.x
+            this.velocity.x *= 0.95
+        }
+        else{
+            this.velocity.x = 0
+        }
+        if (this.y + this.height <= canvas.offsetHeight - Ground) {
+            this.y = Math.min(this.y + this.velocity.y, canvas.offsetHeight-Ground-this.width)
+            this.velocity.y -= Gravity
+        }
+
+        if (this.is_collide(Player)){
+            if (this.can_attack){
+                Player.health -= this.damage
+                this.can_attack = false
+                setTimeout(() => {
+                    this.can_attack = true
+                }, 300)
+            }
         }
     }
 }

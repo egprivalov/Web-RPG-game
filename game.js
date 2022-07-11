@@ -1,3 +1,5 @@
+const SlimeEnemy = new Slime(50, 50, ctx, 500, 100)
+
 setInterval(()=>{
     // Отрисовка заднего фона с перекрытием прошлых кадров (Для решения проблемы наслоения)
     ctx.drawImage(background, 0, 0, canvas.offsetWidth, canvas.offsetHeight)
@@ -6,9 +8,10 @@ setInterval(()=>{
 
     // Обновление спрайтов
     Player.update()
+    SlimeEnemy.update()
 
     // Отрисовка объектов
-    Stand.draw()
+    SlimeEnemy.draw()
     Player.draw()
 },16)
 
@@ -71,7 +74,7 @@ document.addEventListener('keydown', (event) =>{
     }
 
     if (event.code === Inputs["Attack"]) {
-        Player.do_attack(Stand)
+        Player.do_attack(SlimeEnemy)
     }
 })
 
