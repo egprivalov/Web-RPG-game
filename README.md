@@ -47,5 +47,5 @@ ___
 
 ## Примеры работы
 11.07.2022:
-![img.png](img.png)
- 
+ ![image](https://user-images.githubusercontent.com/44251572/178223853-16804c2b-f2a9-4032-8f5a-e620b67cced6.png)
+
