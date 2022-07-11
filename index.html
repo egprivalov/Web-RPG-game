@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>btl</title>
+    <link rel="icon" href="Assets/Inventory/Sword.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@200&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background: #e3d6c8;
+            font-family: "Montserrat Subrayada", sans-serif;
+        }
+        .main{
+            border: solid 5px #371005;
+            border-radius: 10px;
+        }
+        .gamesurf{
+            display: flex;
+        }
+        .game{
+            border: solid 5px #371005;
+            border-radius: 10px;
+            align-content: center;
+            margin: .5rem 0 0 .5rem;
+        }
+        .inventory{
+            border: solid 5px #371005;
+            border-radius: 10px;
+            list-style: none;
+            margin: .5rem .5rem 0 .5rem;
+        }
+        .title{
+            color: #371005;
+            margin: .5rem 5rem .5rem 5rem;
+            border: #371005 solid 3px;
+            border-radius: 30px;
+            font-family: "Century Gothic";
+            font-size: x-large;
+            font-weight: bolder;
+            background-color: #b6846b;
+        }
+        table{
+            justify-content: center;
+            border: #371005 3px solid;
+            border-radius: 10px;
+            margin: 0 .5rem;
+            background-color: #b6846b;
+
+        }
+        caption{
+            margin-left: 10rem;
+        }
+        .hint{
+            font-family: "Century Gothic";
+            display: flex;
+            vertical-align: middle;
+            margin: 0 1rem ;
+            max-width: 1080px;
+            justify-content: center;
+        }
+        .img{
+            margin-top: .5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="gamesurf">
+            <canvas width="1080" height="600" id="Surface" class="game">
+                <!--  TODO: Добавить хп бары  -->
+            </canvas>
+            <div class="inventory">
+                <!--  TODO: Сделать нормальное отображение таблицы  -->
+                <table>
+                    <caption class="title" >Инвентарь</caption>
+                    <tr>
+                        <td>
+                            <p>Sword</p>
+                        </td>
+                        <td>
+                            <img src="Assets/Inventory/Sword.png">
+                        </td>
+                        <td>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, temporibus!</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <script src="modules/Classes.js"></script>
+            <script src="modules/Constants.js"></script>
+            <script src = game.js></script>
+        </div>
+
+        <div class="hint">
+            <h3>Управление персонажем:</h3>
+            <img src="Assets/Key-hints/WASD.png" height="75px">
+            <h3>Рывок:</h3>
+            <img src="Assets/Key-hints/Shift.png" height="50px" class="hint img">
+            <h3>Атака:</h3>
+            <img src="Assets/Key-hints/K.png" height="60px">
+        </div>
+    </div>
+</body>
+</html>
