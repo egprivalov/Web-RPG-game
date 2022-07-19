@@ -1,0 +1,82 @@
+body{
+    background: #e3d6c8;
+    font-family: "Century Gothic", sans-serif;
+    font-weight: bold;
+}
+.main{
+    border: solid 5px #371005;
+    border-radius: 10px;
+    min-width: max-content;
+    min-height: max-content;
+    max-width: max-content;
+    max-height: max-content;
+}
+.gamesurf{
+    display: flex;
+}
+.game{
+    border: solid 5px #371005;
+    border-radius: 10px;
+    align-content: center;
+    margin: .5rem 0 0 .5rem;
+}
+.inventory{
+    border: solid 5px #371005;
+    border-radius: 10px;
+    list-style: none;
+    min-width: 330px;
+    margin: .5rem .5rem 0 .5rem;
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 0;
+    margin: 0 .5rem
+}
+.name{
+    margin-left: .5rem;
+    width: 50px;
+}
+.pic{
+    margin: 0 0;
+}
+.list{
+    list-style-type: none;
+    margin-left: .5rem;
+    padding-left: .5rem;
+    width: 80px;
+
+}
+.title{
+    color: #371005;
+    margin: .5rem 5rem .5rem 5rem;
+    border: #371005 solid 3px;
+    border-radius: 30px;
+    font-size: x-large;
+    font-weight: bolder;
+    background-color: #b6846b;
+}
+table{
+    justify-content: center;
+    border: #371005 3px solid;
+    color: #371005;
+    border-radius:  10px;
+    margin: 0 .5rem;
+    background-color: #b6846b;
+    font-size: large;
+}
+caption{
+    margin-left: 10rem;
+}
+.hint{
+    display: flex;
+    vertical-align: middle;
+    margin: 0 1rem ;
+    max-width: 1080px;
+    justify-content: center;
+}
+.img{
+    margin-top: .5rem;
+}
+
