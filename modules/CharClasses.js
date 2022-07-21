@@ -1,5 +1,5 @@
 class Character extends Sprite{
-    color = '#ff0000';
+    color = '#88c725';
     is_alive = true;
     attackOffset = {
         x: null,
@@ -16,14 +16,18 @@ class Character extends Sprite{
     has_dash = true;
     attack;
     current_cell = { x:3, y:3 }
+    imgSize = {
+        w: 20,
+        h: 20
+    }
+    killCounter = 0
 
     // Направление взгляда персонажа
     // 1 - Направо
     // -1 - Налево
     direction = 1;
 
-    // TODO: СДЕЛАТЬ АССЕТЫ И ПОДКЛЮЧИТЬ ИХ. Реализовать нормально с атакой.
-    constructor(w,h, ctx, hlth, wpn) {
+    constructor(w,h, ctx, hlth, wpn, name = "Player") {
         super(w,h,0, canvas.offsetHeight-Ground-h,ctx);
         this.health = hlth
         this.MaxHealth = hlth
@@ -35,15 +39,26 @@ class Character extends Sprite{
         }
         this.attack = new Attack(this.weapon.area.width, this.weapon.area.height, this.x + this.attackOffset.x +
             this.weapon.area.offset.x,this.y - this.attackOffset.y + this.weapon.area.offset.y, this.context,
-            this.weapon.duration, this.weapon.damage)
+            this.weapon.duration, this.weapon.damage, Math.ceil(this.weapon.duration / this.weapon.frames), this.weapon.frames,
+            this.weapon.imageSize)
+        this.attack.image = this.weapon.image;
         this.healthBar = new HealthBar(this.color, canvas.offsetWidth * 0.05, canvas.offsetHeight * 0.05, this)
+
+        this.imageOffset.w = this.imgSize.w;
+        this.imageOffset.h = this.imgSize.h;
+
+        this.name = name;
     }
     get_dead(){
         this.is_alive = false
-        console.log("Вы умерли!!!")
+        setTimeout(()=> {
+            GameOver()
+        },1000)
     }
+
     do_attack(enemy){
         if (!this.is_attacking && !this.is_resting){
+            this.attack.current_frame = 0;
             this.is_attacking = true
 
             if (this.attack.is_collide(enemy)){
@@ -60,6 +75,7 @@ class Character extends Sprite{
 
         }
     }
+
     update() {
         // Движение по x
         this.x = Math.min(Math.max(this.x + this.velocity.x, 0), canvas.offsetWidth - this.width)
@@ -111,14 +127,29 @@ class Slime extends Sprite{
     can_attack = true
     is_alive = true
     is_in_fight = false;
+    imgSize = {
+        w: 21,
+        h: 20
+    }
+    current_frame = 0;
 
-    constructor(w,h, ctx, hlth, dmg, color) {
-        super(w, h, canvas.offsetWidth-w, canvas.offsetHeight - Ground - h, ctx);
+    constructor(w,h, ctx, hlth, dmg) {
+        super(w, h, canvas.offsetWidth-w, canvas.offsetHeight - Ground - h, ctx, 2, 200);
         this.health = hlth
         this.MaxHealth = hlth
         this.damage = dmg
+        let color = SlimeColors[Math.trunc(Math.random()*7)]
         this.color = color
-        this.healthBar = new HealthBar(this.color, canvas.offsetWidth * 0.55, canvas.offsetHeight * 0.05, this)
+        if (Math.random()<0.5){
+            this.image.src = "./assets/Slime/"+ color.name + ".png"
+        }
+        else{
+            this.image.src = "./assets/Slime/"+ color.name + "-left.png"
+        }
+        this.healthBar = new HealthBar(this.color.color, canvas.offsetWidth * 0.55, canvas.offsetHeight * 0.05, this, true)
+        this.imageOffset.w = this.imgSize.w;
+        this.imageOffset.h = this.imgSize.h;
+
     }
 
     draw() {
@@ -129,23 +160,23 @@ class Slime extends Sprite{
     }
 
     update() {
+        let direction;
         if (this.health <= 0){
             this.is_alive = false
-            console.log("You killed slime")
         }
+        if (this.x + this.width < Player.x) {
 
+            this.image.src = "./assets/Slime/" + this.color.name + ".png"
+            direction = 1;
+        }
+        else {
+            this.image.src = "./assets/Slime/" + this.color.name + "-left.png"
+            direction = -1;
+        }
         if (!this.is_jumping){
-            if (this.x + this.width < Player.x){
-                this.velocity = {
-                    x: Math.random() * 10 + 20,
-                    y: -25
-                }
-            }
-            else{
-                this.velocity = {
-                    x: -20 - Math.random() * 10,
-                    y: -25
-                }
+            this.velocity = {
+                x: direction*(Math.random() * 10 + 20),
+                y: -25
             }
             this.is_jumping = true
             setTimeout(()=>{
@@ -178,8 +209,10 @@ class Slime extends Sprite{
 
     get_dead(){
         Player.is_in_fight = false;
+        Player.killCounter++;
+        enemiesOnField--;
         setTimeout( ()=> {
             Travel()
-        },1200)
+        },1000)
     }
 }

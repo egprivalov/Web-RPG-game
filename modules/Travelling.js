@@ -5,6 +5,7 @@ const PlayerSpriteParamsTravel = {w: CellSize-2*OffsetOfTravelSprite, h: CellSiz
 let frameDuration = 30;
 
 function Travel(){
+    Player.image.src = "./assets/Player/Travelling/Player-right.png"
     Player.width = PlayerSpriteParamsTravel.w;
     Player.height = PlayerSpriteParamsTravel.h;
     Player.x = Player.current_cell.x * CellSize + OffsetOfTravelSprite;
@@ -14,8 +15,19 @@ function Travel(){
 
     let travelling = setInterval(()=>{
         Field.forEach(field => field.draw());
-        ctx.drawImage(TravelBackground, 0, 0)
+        ctx.drawImage(TravelBackground,
+            Field[FieldSize.width+1].x, Field[FieldSize.width+1].y,
+            CellSize*(FieldSize.width-2), CellSize*(FieldSize.height-2))
         Player.draw();
+
+        if (!enemiesOnField){
+            endTravel()
+            to_dark();
+            setTimeout(() => {
+                CreateField();
+                Travel()
+            }, 1000)
+        }
     }, 16)
 
     document.addEventListener("keydown", keydownHandler)
@@ -40,11 +52,11 @@ function Travel(){
                             setTimeout( ()=> {
                                 endTravel()
                                 setTimeout( ()=> {
-                                    Player.is_in_fight = true;
-                                    cellNext.on_grass.is_in_fight = true;
                                     setTimeout(()=>{
+                                        cellNext.on_grass.is_in_fight = true;
                                         cellNext.on_grass = null;
-                                    }, 1000)
+                                        Player.is_in_fight = true;
+                                    }, 400)
                                     startBattle(cellNext.on_grass)
                                 }, 1000)
                             }, 300)
@@ -87,12 +99,12 @@ function Travel(){
                         else if (cellNext.on_grass.constructor.name === "Slime"){
                             isMoving = true
                             MoveVertical(false)
+                            Player.is_in_fight = true;
+                            cellNext.on_grass.is_in_fight = true;
                             setTimeout( ()=> {
                                 endTravel()
                                 setTimeout( ()=> {
-                                    Player.is_in_fight = true;
-                                    cellNext.on_grass.is_in_fight = true;
-                                    setTimeout(()=>{
+                                    setTimeout(() => {
                                         cellNext.on_grass = null;
                                     }, 1000)
                                     startBattle(cellNext.on_grass)
@@ -142,31 +154,37 @@ function Travel(){
     // false - Идет в обратном направлении
     function MoveHorizontal(Left) {
         let direction;
-        if (Left) { direction = -1 }
-        else { direction = 1 }
+        if (Left) {
+            direction = -1;
+            Player.image.src = "./assets/Player/Travelling/Player-left.png"
+        }
+        else {
+            direction = 1;
+            Player.image.src = "./assets/Player/Travelling/Player-right.png"
+        }
         setTimeout(() => {
             Player.x += CellSize / 6 * direction;
-            Player.y -= CellSize / 12;
+            Player.y -= CellSize / 20;
         }, frameDuration);
         setTimeout(() => {
             Player.x += CellSize / 6 * direction;
-            Player.y -= CellSize / 12;
+            Player.y -= CellSize / 20;
         }, frameDuration*2)
         setTimeout(() => {
             Player.x += CellSize / 6 * direction;
-            Player.y -= CellSize / 12;
+            Player.y -= CellSize / 20;
         }, frameDuration*3)
         setTimeout(() => {
             Player.x += CellSize / 6 * direction;
-            Player.y += CellSize / 12;
+            Player.y += CellSize / 20;
         }, frameDuration*4)
         setTimeout(() => {
             Player.x += CellSize / 6 * direction;
-            Player.y += CellSize / 12;
+            Player.y += CellSize / 20;
         }, frameDuration*5)
         setTimeout(() => {
             Player.x += CellSize / 6 * direction;
-            Player.y += CellSize / 12;
+            Player.y += CellSize / 20;
             Player.current_cell.x += direction
             isMoving = false;
         }, frameDuration*6)
@@ -174,8 +192,14 @@ function Travel(){
 
     function MoveVertical(Up) {
         let direction;
-        if (Up) { direction = -1 }
-        else { direction = 1 }
+        if (Up) {
+            direction = -1;
+            Player.image.src = "./assets/Player/Travelling/Player-up.png"
+        }
+        else {
+            direction = 1;
+            Player.image.src = "./assets/Player/Travelling/Player-down.png"
+        }
 
         setTimeout(() => {
             Player.y += CellSize / 6 * direction;

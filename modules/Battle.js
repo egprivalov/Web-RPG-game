@@ -3,9 +3,10 @@ let drawingBattle;
 const battleBackground = new Image()
 battleBackground.src = "assets/background.jpg"
 
-const Sword = new Weapon(100, 500, {width: 100, height: 80, offset: {x:0, y:0}}, 200)
-const Spear = new Weapon(50, 200, {width: 300, height: 30, offset: {x:20, y:0}}, 200)
-const GreatSword = new Weapon(200, 500, {width: 200, height: 150, offset: {x:-40, y: -70}}, 1000)
+const Sword = new Weapon(100, 500, {width: 100, height: 100, offset: {x:10, y:0}}, 200,
+    "./assets/Weapons/Sword.png", 7, {w: 25, h:25})
+//const Spear = new Weapon(50, 200, {width: 300, height: 30, offset: {x:20, y:0}}, 200)
+//const GreatSword = new Weapon(200, 500, {width: 200, height: 150, offset: {x:-40, y: -70}}, 1000)
 
 const Gravity = -1
 const Ground = 0.12 * canvas.offsetHeight

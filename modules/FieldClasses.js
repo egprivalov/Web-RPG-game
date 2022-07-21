@@ -35,7 +35,8 @@ class Grass extends FieldCell {
             } else {
                 if (Math.random() < 0.07){
                     this.on_grass = new Slime(CellSize, CellSize, ctx, 400 + Math.ceil(Math.random()*200),
-                        40 + Math.ceil(Math.random()*20), `rgba(${Math.ceil(Math.random()*255)}, ${Math.ceil(Math.random()*255)}, ${Math.ceil(Math.random()*255)}, 1)`)
+                        40 + Math.ceil(Math.random()*20))
+                    enemiesOnField++;
                     this.on_grass.healthbar = null;
                     this.on_grass.x = this.x+OffsetOfTravelSprite;
                     this.on_grass.y = this.y+OffsetOfTravelSprite;

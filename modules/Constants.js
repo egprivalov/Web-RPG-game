@@ -4,8 +4,8 @@ if (canvas.getContext) {
     ctx = canvas.getContext("2d")
 }
 
-const PlayerSpriteParamsBattle = {w: 70, h: 150}
-const EnemySpriteParamsBattle = {w:50, h: 40}
+const PlayerSpriteParamsBattle = {w: 80, h: 120}
+const EnemySpriteParamsBattle = {w:60, h: 60}
 let Field = []
 const FieldSize = {
     width: 18,
@@ -13,6 +13,38 @@ const FieldSize = {
 }
 const CellSize = 60;
 
+let enemiesOnField = 0;
+
+const SlimeColors = [
+    {
+        name: "blue",
+        color: "#509fb2"
+    },
+    {
+        name: "coffee",
+        color: "#D7B594"
+    },
+    {
+        name: "green",
+        color: "#A8CA58"
+    },
+    {
+        name: "grey",
+        color: "#A8B5B2"
+    },
+    {
+        name: "orange",
+        color: "#CF573C"
+    },
+    {
+        name: "pink",
+        color: "#C65197"
+    },
+    {
+        name: "yellow",
+        color: "#DE9E41"
+    }
+]
 
 const Inputs = {
     "Up": "KeyW",
@@ -83,4 +115,28 @@ const CreateField = () => {
             }
         }
     }
+}
+
+const GameOver = () => {
+    let border = new Image();
+    border.src = "assets/game-over-border.png";
+    setInterval(()=> {
+        ctx.fillStyle = "#333"
+        ctx.fillRect(0,0, canvas.offsetWidth, canvas.offsetHeight);
+        ctx.drawImage(border, canvas.offsetWidth / 5, canvas.offsetHeight / 5,
+            canvas.offsetWidth*3/5,canvas.offsetHeight*3/5);
+        ctx.fillStyle = "#e3d6c8"
+
+        let x = canvas.offsetWidth/2 - 160;
+        let y = canvas.offsetHeight/3 + 100;
+        ctx.font = "50px sans-serif"
+        ctx.fillText(`Игра Окончена!`, x, y)
+
+        ctx.font = "30px sans-serif"
+        let offset = ctx.measureText(`Игрок ${Player.name} убил ${Player.killCounter} противников!`).width
+        x = canvas.offsetWidth/2 - offset/2;
+        y = canvas.offsetHeight/3 + 150;
+
+        ctx.fillText(`Игрок ${Player.name} убил ${Player.killCounter} противников!`, x, y)
+    }, 100)
 }
