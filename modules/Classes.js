@@ -21,7 +21,7 @@ class Sprite {
         this.frameMax = frameMax;
         this.interval = interv;
         this.animation = setInterval(()=>{
-            this.imageOffset.x = this.current_frame * this.imgSize.w;
+            this.imageOffset.x = this.current_frame * (this.imgSize.w + 4)+4;
             if (this.current_frame < this.frameMax-1) {
                 this.current_frame++;
             }

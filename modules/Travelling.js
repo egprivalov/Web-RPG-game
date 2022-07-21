@@ -156,11 +156,11 @@ function Travel(){
         let direction;
         if (Left) {
             direction = -1;
-            Player.imageOffset.y = 40;
+            Player.imageOffset.y = 50;
         }
         else {
             direction = 1;
-            Player.imageOffset.y = 60;
+            Player.imageOffset.y = 75;
         }
         setTimeout(() => {
             Player.x += CellSize / 6 * direction;
@@ -194,7 +194,7 @@ function Travel(){
         let direction;
         if (Up) {
             direction = -1;
-            Player.imageOffset.y = 20;
+            Player.imageOffset.y = 25;
         }
         else {
             direction = 1;
