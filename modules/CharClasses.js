@@ -140,12 +140,9 @@ class Slime extends Sprite{
         this.damage = dmg
         let color = SlimeColors[Math.trunc(Math.random()*7)]
         this.color = color
-        if (Math.random()<0.5){
-            this.image.src = "./assets/Slime/"+ color.name + ".png"
-        }
-        else{
-            this.image.src = "./assets/Slime/"+ color.name + "-left.png"
-        }
+        this.image.src = "./assets/Slime/"+ color.name + ".png"
+        this.imageOffset.y = Math.round(Math.random()) * (this.imgSize.h + 1)
+
         this.healthBar = new HealthBar(this.color.color, canvas.offsetWidth * 0.55, canvas.offsetHeight * 0.05, this, true)
         this.imageOffset.w = this.imgSize.w;
         this.imageOffset.h = this.imgSize.h;
@@ -165,12 +162,11 @@ class Slime extends Sprite{
             this.is_alive = false
         }
         if (this.x + this.width < Player.x) {
-
-            this.image.src = "./assets/Slime/" + this.color.name + ".png"
+            this.imageOffset.y = 0;
             direction = 1;
         }
         else {
-            this.image.src = "./assets/Slime/" + this.color.name + "-left.png"
+            this.imageOffset.y = this.imgSize.w + 1
             direction = -1;
         }
         if (!this.is_jumping){

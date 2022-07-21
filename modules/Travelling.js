@@ -5,7 +5,7 @@ const PlayerSpriteParamsTravel = {w: CellSize-2*OffsetOfTravelSprite, h: CellSiz
 let frameDuration = 30;
 
 function Travel(){
-    Player.image.src = "./assets/Player/Travelling/Player-right.png"
+    Player.image.src = "./assets/Player/Travelling/Player.png"
     Player.width = PlayerSpriteParamsTravel.w;
     Player.height = PlayerSpriteParamsTravel.h;
     Player.x = Player.current_cell.x * CellSize + OffsetOfTravelSprite;
@@ -156,11 +156,11 @@ function Travel(){
         let direction;
         if (Left) {
             direction = -1;
-            Player.image.src = "./assets/Player/Travelling/Player-left.png"
+            Player.imageOffset.y = 40;
         }
         else {
             direction = 1;
-            Player.image.src = "./assets/Player/Travelling/Player-right.png"
+            Player.imageOffset.y = 60;
         }
         setTimeout(() => {
             Player.x += CellSize / 6 * direction;
@@ -194,11 +194,11 @@ function Travel(){
         let direction;
         if (Up) {
             direction = -1;
-            Player.image.src = "./assets/Player/Travelling/Player-up.png"
+            Player.imageOffset.y = 20;
         }
         else {
             direction = 1;
-            Player.image.src = "./assets/Player/Travelling/Player-down.png"
+            Player.imageOffset.y = 0;
         }
 
         setTimeout(() => {
