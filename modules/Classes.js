@@ -4,8 +4,6 @@ class Sprite {
     imageOffset = {
         x: 0,
         y: 0,
-        w: 0,
-        h: 0
     }
     imgSize = {
         w: 0,
@@ -35,7 +33,7 @@ class Sprite {
     draw() {
         this.context.drawImage(this.image,
             this.imageOffset.x, this.imageOffset.y,
-            this.imageOffset.w, this.imageOffset.h,
+            this.imgSize.w, this.imgSize.h,
             this.x, this.y,
             this.width, this.height)
     }
@@ -54,7 +52,7 @@ class HealthBar {
         width: canvas.offsetWidth * 0.4,
         height: canvas.offsetHeight * 0.07,
     }
-    offset = 0
+    offset = 0;
 
     constructor(color, x, y, char, needOffset = false) {
         this.color = color;

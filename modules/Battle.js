@@ -12,21 +12,34 @@ const Gravity = -1
 const Ground = 0.12 * canvas.offsetHeight
 const Player = new Character(PlayerSpriteParamsBattle.w, PlayerSpriteParamsBattle.h, ctx, 1000, Sword)
 
-function startBattle(Enemy) {
+function BattleInit(Enemy){
+    Player.image.src = "./assets/Player/Battle/Player.png"
     Player.width = PlayerSpriteParamsBattle.w
     Player.height = PlayerSpriteParamsBattle.h
     Player.x = canvas.offsetWidth * 0.1;
     Player.y = canvas.offsetHeight - Ground - Player.height;
+    Player.imageOffset.x = 0;
+    Player.imageOffset.y = 0;
+    Player.frameMax = 4;
+    Player.imgSize = {
+        w: 55,
+        h: 75
+    }
     Player.is_down = false;
 
     Enemy.width = EnemySpriteParamsBattle.w
     Enemy.height = EnemySpriteParamsBattle.h
     Enemy.x = canvas.offsetWidth * 0.9;
     Enemy.y = canvas.offsetHeight - Ground - Enemy.height;
+}
+
+function startBattle(Enemy) {
+    Player.is_in_fight = true;
+    Enemy.is_in_fight = true;
 
     drawingBattle = setInterval(() => {
         if (!Player.is_alive || !Enemy.is_alive){
-            endBattle()
+            setTimeout(()=>{ endBattle() }, 100);
         }
         // Отрисовка заднего фона с перекрытием прошлых кадров (Для решения проблемы наслоения)
         ctx.drawImage(battleBackground, 0, 0, canvas.offsetWidth, canvas.offsetHeight)
@@ -57,7 +70,7 @@ function startBattle(Enemy) {
             }
             case Inputs["Down"]: {
                 if (Player.on_earth) {
-                    Player.height = PlayerSpriteParamsBattle.h / 2
+                    Player.height = PlayerSpriteParamsBattle.h_down
                     if (!Player.is_down) {
                         Player.y += Player.height
                     }
@@ -70,21 +83,23 @@ function startBattle(Enemy) {
 
             case Inputs["Right"]: {
                 if (!Player.is_down && Player.on_earth) {
-                    Player.velocity.x = 20
+                    Player.velocity.x = 20;
                 }
-                Player.direction = 1
+                Player.direction = 1;
+
                 return
             }
             case Inputs["Left"]: {
                 if (!Player.is_down && Player.on_earth) {
-                    Player.velocity.x = -20
+                    Player.velocity.x = -20;
                 }
-                Player.direction = -1
+                Player.direction = -1;
+
                 return;
             }
 
             case Inputs["Dash"]: {
-                if (Player.has_dash) {
+                if (Player.has_dash && !Player.is_down) {
                     Player.velocity.x = Player.direction * 35
                     Player.has_dash = false
                     setTimeout(() => {
@@ -94,11 +109,12 @@ function startBattle(Enemy) {
                 return;
             }
             case Inputs["Attack"]: {
-                Player.do_attack(Enemy);
+                if (!this.is_attacking && !this.is_resting) {
+                    Player.do_attack(Enemy);
+                }
                 return;
             }
-            default:
-                break;
+            default: break;
         }
     }
 
@@ -108,6 +124,7 @@ function startBattle(Enemy) {
                 Player.attackOffset.y = -1/4 * PlayerSpriteParamsBattle.h
                 Player.height = PlayerSpriteParamsBattle.h
                 Player.is_down = false
+
             }
         }
     }

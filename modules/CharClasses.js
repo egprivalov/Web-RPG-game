@@ -28,7 +28,7 @@ class Character extends Sprite{
     direction = 1;
 
     constructor(w,h, ctx, hlth, wpn, name = "Player") {
-        super(w,h,0, canvas.offsetHeight-Ground-h,ctx);
+        super(w,h,0, canvas.offsetHeight-Ground-h,ctx, 1, 150);
         this.health = hlth
         this.MaxHealth = hlth
         this.weapon = wpn
@@ -44,9 +44,6 @@ class Character extends Sprite{
         this.attack.image = this.weapon.image;
         this.healthBar = new HealthBar(this.color, canvas.offsetWidth * 0.05, canvas.offsetHeight * 0.05, this)
 
-        this.imageOffset.w = this.imgSize.w;
-        this.imageOffset.h = this.imgSize.h;
-
         this.name = name;
     }
     get_dead(){
@@ -57,22 +54,21 @@ class Character extends Sprite{
     }
 
     do_attack(enemy){
-        if (!this.is_attacking && !this.is_resting){
+        if (!this.is_attacking && !this.is_resting) {
             this.attack.current_frame = 0;
             this.is_attacking = true
 
-            if (this.attack.is_collide(enemy)){
+            if (this.attack.is_collide(enemy)) {
                 this.attack.deal_damage(enemy)
             }
 
-            setTimeout(()=>{
+            setTimeout(() => {
                 this.is_attacking = false
                 this.is_resting = true
                 setTimeout(() => {
                     this.is_resting = false
                 }, this.weapon.resting_time)
             }, this.weapon.duration)
-
         }
     }
 
@@ -81,29 +77,76 @@ class Character extends Sprite{
         this.x = Math.min(Math.max(this.x + this.velocity.x, 0), canvas.offsetWidth - this.width)
 
         // Замедление, для избегания рывков
-        if (Math.abs(this.velocity.x) >= 10) { this.velocity.x *= 0.9 }
-        else { this.velocity.x = 0 }
+        if (Math.abs(this.velocity.x) >= 10) {
+            this.velocity.x *= 0.9
+        } else {
+            this.velocity.x = 0
+        }
 
         // Воздействие гравитации
-        if (this.y + this.height < canvas.offsetHeight-Ground) { this.velocity.y -= Gravity }
-        else { this.on_earth = true }
+        if (this.y + this.height < canvas.offsetHeight - Ground) {
+            this.velocity.y -= Gravity
+        } else {
+            this.on_earth = true
+        }
 
         // Перемещение и замедление по y
-        this.y = Math.min(this.velocity.y + this.y, canvas.offsetHeight-this.height - Ground)
-        if (Math.abs(this.velocity.y) >= 1) { this.velocity.y *= 0.95 }
-        else { this.velocity.y = 0 }
+        this.y = Math.min(this.velocity.y + this.y, canvas.offsetHeight - this.height - Ground)
+        if (Math.abs(this.velocity.y) >= 1) {
+            this.velocity.y *= 0.95
+        } else {
+            this.velocity.y = 0
+        }
 
         // Обновления area Оружия
-        if (this.direction === 1){
+        if (this.direction === 1) {
             this.attack.x = this.x + this.attackOffset.x + this.weapon.area.offset.x
             this.attack.y = this.y - this.attackOffset.y + this.weapon.area.offset.y
-        }
-        else {
+        } else {
             this.attack.x = this.x - this.attackOffset.mnsx - this.weapon.area.offset.x
             this.attack.y = this.y - this.attackOffset.y + this.weapon.area.offset.y
         }
-        if (this.health <= 0){
+        if (this.health <= 0) {
             this.get_dead()
+        }
+
+        // Обновление спрайта
+        if (Player.is_attacking) {
+            if (Player.is_down) {
+                if (Player.direction === 1) {
+                    Player.imageOffset.y = 640;
+                } else {
+                    Player.imageOffset.y = 720;
+                }
+            } else {
+                if (Player.direction === 1) {
+                    Player.imageOffset.y = 160;
+                } else {
+                    Player.imageOffset.y = 240;
+                }
+            }
+        }
+        else {
+            if (Player.is_down) {
+                if (Player.direction === 1) {
+                    Player.imageOffset.y = 480;
+                } else {
+                    Player.imageOffset.y = 560;
+                }
+            } else {
+                if (Player.direction === 1) {
+                    Player.imageOffset.y = 0;
+                } else {
+                    Player.imageOffset.y = 80;
+                }
+            }
+            if (!Player.on_earth) {
+                if (Player.direction === 1) {
+                    Player.imageOffset.y = 320;
+                } else {
+                    Player.imageOffset.y = 400;
+                }
+            }
         }
     }
 
@@ -129,7 +172,7 @@ class Slime extends Sprite{
     is_in_fight = false;
     imgSize = {
         w: 21,
-        h: 20
+        h: 18
     }
     current_frame = 0;
 
@@ -141,12 +184,9 @@ class Slime extends Sprite{
         let color = SlimeColors[Math.trunc(Math.random()*7)]
         this.color = color
         this.image.src = "./assets/Slime/"+ color.name + ".png"
-        this.imageOffset.y = Math.round(Math.random()) * (this.imgSize.h + 1)
+        this.imageOffset.y = Math.round(Math.random()) * (this.imgSize.h + 2) + 2
 
         this.healthBar = new HealthBar(this.color.color, canvas.offsetWidth * 0.55, canvas.offsetHeight * 0.05, this, true)
-        this.imageOffset.w = this.imgSize.w;
-        this.imageOffset.h = this.imgSize.h;
-
     }
 
     draw() {
@@ -162,11 +202,11 @@ class Slime extends Sprite{
             this.is_alive = false
         }
         if (this.x + this.width < Player.x) {
-            this.imageOffset.y = 0;
+            this.imageOffset.y = 2;
             direction = 1;
         }
         else {
-            this.imageOffset.y = this.imgSize.w + 1
+            this.imageOffset.y = 22;
             direction = -1;
         }
         if (!this.is_jumping){
@@ -204,11 +244,13 @@ class Slime extends Sprite{
     }
 
     get_dead(){
-        Player.is_in_fight = false;
         Player.killCounter++;
         enemiesOnField--;
         setTimeout( ()=> {
+            TravelInit()
+        }, 200);
+        setTimeout( ()=> {
             Travel()
-        },1000)
+        },1500)
     }
 }

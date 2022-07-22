@@ -1,6 +1,17 @@
+@font-face {
+    font-family: 'BIT';
+    src: url("./assets/monogram-extended.ttf")
+}
+
+@font-face {
+    font-family: 'Dungeon';
+    src: url("./assets/DungeonFont.ttf")
+}
+
 body{
     background: #e3d6c8;
-    font-family: "Century Gothic", sans-serif;
+    font-family: "BIT", sans-serif;
+    font-size: 23px;
     font-weight: bold;
 }
 .main{
@@ -21,6 +32,7 @@ body{
     margin: .5rem 0 0 .5rem;
 }
 .inventory{
+    font-size: 25px;
     border: solid 5px #371005;
     border-radius: 10px;
     list-style: none;
@@ -46,14 +58,17 @@ body{
     margin-left: .5rem;
     padding-left: .5rem;
     width: 80px;
-
 }
+
+.characteristics{
+    font-size: 20px;
+}
+
 .title{
     color: #371005;
     margin: .5rem 5rem .5rem 5rem;
     border: #371005 solid 3px;
     border-radius: 30px;
-    font-size: x-large;
     font-weight: bolder;
     background-color: #b6846b;
 }
@@ -64,19 +79,17 @@ table{
     border-radius:  10px;
     margin: 0 .5rem;
     background-color: #b6846b;
-    font-size: large;
 }
 caption{
     margin-left: 10rem;
+    font-size: 30px;
 }
 .hint{
     display: flex;
-    vertical-align: middle;
-    margin: 0 1rem ;
+    margin: 0 1rem;
     max-width: 1080px;
     justify-content: center;
+    align-items: center;
 }
-.img{
-    margin-top: .5rem;
-}
+
 

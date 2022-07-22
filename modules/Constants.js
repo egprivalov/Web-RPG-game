@@ -3,8 +3,13 @@ let ctx
 if (canvas.getContext) {
     ctx = canvas.getContext("2d")
 }
+const border = new Image();
+border.src = "assets/game-over-border.png";
 
-const PlayerSpriteParamsBattle = {w: 80, h: 120}
+const hexNums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+
+const PlayerSpriteParamsBattle = {w: 100, h: 150,
+                                  h_down: 80}
 const EnemySpriteParamsBattle = {w:60, h: 60}
 let Field = []
 const FieldSize = {
@@ -14,6 +19,7 @@ const FieldSize = {
 const CellSize = 60;
 
 let enemiesOnField = 0;
+let World_counter = 0;
 
 const SlimeColors = [
     {
@@ -104,6 +110,7 @@ const to_dark = () => {
 }
 
 const CreateField = () => {
+    World_counter++;
     Field = []
     for (let y = 0; y < FieldSize.height; y++){
         for (let x = 0; x < FieldSize.width; x++) {
@@ -118,8 +125,6 @@ const CreateField = () => {
 }
 
 const GameOver = () => {
-    let border = new Image();
-    border.src = "assets/game-over-border.png";
     setInterval(()=> {
         ctx.fillStyle = "#333"
         ctx.fillRect(0,0, canvas.offsetWidth, canvas.offsetHeight);
@@ -127,16 +132,69 @@ const GameOver = () => {
             canvas.offsetWidth*3/5,canvas.offsetHeight*3/5);
         ctx.fillStyle = "#e3d6c8"
 
-        let x = canvas.offsetWidth/2 - 160;
+        ctx.font = "64px BIT"
+        let offset = ctx.measureText(`Игра Окончена!`).width
+        let x = canvas.offsetWidth/2 - offset/2;
         let y = canvas.offsetHeight/3 + 100;
-        ctx.font = "50px sans-serif"
         ctx.fillText(`Игра Окончена!`, x, y)
 
-        ctx.font = "30px sans-serif"
-        let offset = ctx.measureText(`Игрок ${Player.name} убил ${Player.killCounter} противников!`).width
+        ctx.font = "30px BIT"
+        offset = ctx.measureText(`Игрок ${Player.name} убил ${Player.killCounter} противников!`).width
         x = canvas.offsetWidth/2 - offset/2;
         y = canvas.offsetHeight/3 + 150;
 
         ctx.fillText(`Игрок ${Player.name} убил ${Player.killCounter} противников!`, x, y)
     }, 100)
+}
+
+const StartMenu = () => {
+    document.addEventListener("keydown", keydownHandler)
+
+    let iter = 15;
+    let step = 1;
+    let drawing = setInterval(()=>{
+        ctx.fillStyle = "#333";
+        ctx.fillRect(0,0,canvas.offsetWidth, canvas.offsetHeight);
+        ctx.drawImage(border, 0, 0,
+            canvas.offsetWidth,canvas.offsetHeight);
+        ctx.fillStyle = "#ccc";
+        ctx.font = "70px Dungeon"
+        let x = canvas.offsetWidth/2 - ctx.measureText("There's Some Name").width/2;
+        let y = canvas.offsetHeight/2;
+        ctx.fillText("There's Some Name", x, y)
+
+        ctx.font = "15px BIT"
+        x = canvas.offsetWidth/2 - ctx.measureText("developed by @egodka").width/2;
+        y = canvas.offsetHeight - 30;
+        ctx.fillText("developed by @egodka", x, y)
+
+        x = 425;
+        y = 425;
+        ctx.font = "25px BIT"
+        ctx.fillStyle = `#${hexNums[iter]}${hexNums[iter]}${hexNums[iter]}`
+        ctx.fillText("Нажмите Enter,чтобы начать", x, y)
+
+
+        if (iter + step < 16 && iter + step >= 3){
+            iter += step;
+        }
+        else{
+            step *= -1;
+        }
+    },100)
+
+    function keydownHandler(event){
+        if (event.code === "Enter"){
+            endStartMenu()
+        }
+    }
+
+    function endStartMenu() {
+        clearInterval(drawing)
+        document.removeEventListener("keydown", keydownHandler)
+        to_dark()
+        setTimeout(()=> {
+            Travel()
+        },1200)
+    }
 }

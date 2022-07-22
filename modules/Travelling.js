@@ -4,13 +4,23 @@ const OffsetOfTravelSprite = 10;
 const PlayerSpriteParamsTravel = {w: CellSize-2*OffsetOfTravelSprite, h: CellSize-2*OffsetOfTravelSprite}
 let frameDuration = 30;
 
-function Travel(){
+function TravelInit(){
+    Player.is_in_fight = false;
     Player.image.src = "./assets/Player/Travelling/Player.png"
     Player.width = PlayerSpriteParamsTravel.w;
     Player.height = PlayerSpriteParamsTravel.h;
     Player.x = Player.current_cell.x * CellSize + OffsetOfTravelSprite;
     Player.y = Player.current_cell.y * CellSize + OffsetOfTravelSprite;
+    Player.imageOffset.x = 0;
+    Player.imageOffset.y = 0;
+    Player.imgSize = {
+        w: 20,
+        h: 20
+    }
+    Player.frameMax = 3;
+}
 
+function Travel(){
     let isMoving = false;
 
     let travelling = setInterval(()=>{
@@ -50,16 +60,15 @@ function Travel(){
                             isMoving = true
                             MoveVertical(true)
                             setTimeout( ()=> {
-                                endTravel()
+                                endTravel();
+                                BattleInit(cellNext.on_grass);
                                 setTimeout( ()=> {
                                     setTimeout(()=>{
-                                        cellNext.on_grass.is_in_fight = true;
                                         cellNext.on_grass = null;
-                                        Player.is_in_fight = true;
                                     }, 400)
                                     startBattle(cellNext.on_grass)
                                 }, 1000)
-                            }, 300)
+                            }, 500)
                         }
                     }
                     return;
@@ -76,6 +85,7 @@ function Travel(){
                             MoveHorizontal(true);
                             setTimeout( ()=> {
                                 endTravel()
+                                BattleInit(cellNext.on_grass);
                                 setTimeout( ()=> {
                                     Player.is_in_fight = true;
                                     cellNext.on_grass.is_in_fight = true;
@@ -103,6 +113,7 @@ function Travel(){
                             cellNext.on_grass.is_in_fight = true;
                             setTimeout( ()=> {
                                 endTravel()
+                                BattleInit(cellNext.on_grass);
                                 setTimeout( ()=> {
                                     setTimeout(() => {
                                         cellNext.on_grass = null;
@@ -126,6 +137,7 @@ function Travel(){
                             MoveHorizontal(false);
                             setTimeout( ()=> {
                                 endTravel()
+                                BattleInit(cellNext.on_grass);
                                 setTimeout( ()=> {
                                     Player.is_in_fight = true;
                                     cellNext.on_grass.is_in_fight = true;
