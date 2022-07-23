@@ -52,15 +52,18 @@ body{
 }
 .pic{
     margin: 0 0;
+    border: 3px solid #371005;
+    border-radius: 50%;
 }
 .list{
     list-style-type: none;
     margin-left: .5rem;
     padding-left: .5rem;
-    width: 80px;
+    width: 50px;
 }
 
 .characteristics{
+    margin-left: 2.5rem;
     font-size: 20px;
 }
 
@@ -86,10 +89,53 @@ caption{
 }
 .hint{
     display: flex;
-    margin: 0 1rem;
     max-width: 1080px;
     justify-content: center;
     align-items: center;
+    max-height: 80px;
 }
-
-
+.selector{
+    font: 20px "BIT", sans-serif;
+    font-weight: bolder;
+    background-color: #b6846b;
+    color: #371005;
+    border: #371005 solid 3px;
+    border-radius: 10px;
+    margin-right: 0;
+    cursor: pointer;
+    padding: 0 .5rem;
+}
+.selector:hover{
+    background-color: #371005;
+    color: #b6846b;
+}
+img{
+    margin-right: 1rem;
+}
+.potion{
+    position: absolute;
+    margin-left: 180px;
+    margin-top: 30px;
+}
+.nameInput{
+    margin: .5rem;
+    display: flex;
+    border-radius: 30px;
+}
+.nameInput>input {
+    font-size: 25px;
+    max-height: 50px;
+    margin-right: .5rem;
+}
+.nameInput>button{
+    font-size: 25px;
+}
+.charName{
+    background-color: #b6846b;
+    border: #371005 3px solid;
+    margin: .5rem;
+    max-width: max-content;
+    height: 20px;
+    border-radius: 10px;
+    padding: .5rem;
+}

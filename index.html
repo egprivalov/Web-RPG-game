@@ -14,14 +14,48 @@
         <div class="gamesurf">
             <canvas id="Surface" class="game" width="1080" height="600"></canvas>
             <div class="inventory">
+                <div class="charName">
+                    <span>Имя Персонажа:</span>
+                </div>
+                <div class="nameInput">
+                    <input id="nameInp" class="selector">
+                    <button class="selector" onclick="setInMemory('name', nameInp.value)">Выбрать</button>
+                </div>
                 <table>
                     <caption class="title" >Инвентарь</caption>
+                    <!--        Меч           -->
+                    <tr class="inventory row">
+                            <td>
+                                <p class="name">Меч</p>
+                            </td>
+                            <td>
+                                <img class="pic" src="assets/Inventory/Sword.png" alt="sword" height="30px">
+                            </td>
+                            <td>
+                                <ul class="list">
+                                    <li>Урон:</li>
+                                    <li>Скорость:</li>
+                                    <li>Дальность:</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul class="list characteristics">
+                                    <li>●●○</li>
+                                    <li>●●○</li>
+                                    <li>●●○</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <button class="selector" onclick="setInMemory('currentWeapon', 'Sword')">Выбрать</button>
+                            </td>
+                    </tr>
+                    <!--       Копье          -->
                     <tr class="inventory row">
                         <td>
-                            <p class="name">Меч</p>
+                            <p class="name">Копье</p>
                         </td>
                         <td>
-                            <img class="pic" src="assets/Inventory/Sword.png" alt="sword" height="30px">
+                            <img class="pic" src="assets/Inventory/Spear.png" alt="spear" height="30px">
                         </td>
                         <td>
                             <ul class="list">
@@ -32,10 +66,28 @@
                         </td>
                         <td>
                             <ul class="list characteristics">
-                                <li>●●●○○</li>
-                                <li>●●●○○</li>
-                                <li>●●●○○</li>
+                                <li>●○○</li>
+                                <li>●●○</li>
+                                <li>●●●</li>
                             </ul>
+                        </td>
+                        <td>
+                            <button class="selector" onclick="setInMemory('currentWeapon', 'Spear')">Выбрать</button>
+                        </td>
+                    </tr>
+                    <!--   Зелье здоровья     -->
+                    <tr class="inventory row">
+                        <td>
+                            <p class="name">Зелье здоровья</p>
+                        </td>
+                        <td>
+                            <img class="pic" src="assets/Inventory/Potion.png" alt="potion" height="30px">
+                        </td>
+                        <td class = "potion">
+                            <p id="potionCount"></p>
+                        </td>
+                        <td>
+                            <button class="selector" onclick="drinkPotion()">Выбрать</button>
                         </td>
                     </tr>
                 </table>
@@ -54,9 +106,9 @@
             <h3>Управление персонажем:</h3>
             <img src="assets/Key-hints/WASD.png" alt="wasd hint" height="75px">
             <h3>Ускорение:</h3>
-            <img src="assets/Key-hints/Shift.png" alt="shift hint" height="50px" class="hint img">
+            <img src="assets/Key-hints/Shift.png" alt="shift hint" height="50px">
             <h3>Атака:</h3>
-            <img src="assets/Key-hints/K.png" alt="K hint" height="60px">
+            <img src="assets/Key-hints/K.png" alt="K hint" height="50px">
         </div>
     </div>
 </body>

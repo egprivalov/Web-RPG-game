@@ -18,6 +18,9 @@ function TravelInit(){
         h: 20
     }
     Player.frameMax = 3;
+
+    potionsCount++;
+    potions.innerText = potionsCount+'';
 }
 
 function Travel(){

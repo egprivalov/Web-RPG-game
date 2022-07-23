@@ -11,7 +11,7 @@ const memoryBasic = [
     ["prevWorldReached", "0"],
     ["maxWorldReached", "0"],
     ["currentWeapon", "Sword"],
-    ["needChange", "false"]
+    ["needChange", "false"],
 ]
 const border = new Image();
 border.src = "assets/game-over-border.png";
@@ -29,6 +29,12 @@ const CellSize = 60;
 
 let enemiesOnField = 0;
 let World_counter = 0;
+let potionsHeal = 250;
+let potionsCount = 0;
+let potions = document.getElementById("potionCount");
+potions.innerText = potionsCount+'';
+let nameInp = document.getElementById("nameInp");
+nameInp.value = "Player"
 
 const Sword = new Weapon(100, 500, {width: 100, height: 100, offset: {x:20, y:0}}, 200,
     "./assets/Weapons/Sword.png", 9, {w: 24, h:24})
@@ -253,5 +259,13 @@ const StartMenu = () => {
         setTimeout(()=> {
             Travel()
         },1200)
+    }
+}
+
+const drinkPotion = () => {
+    if (potionsCount && Player.health !== Player.MaxHealth){
+        Player.health = Math.min(Player.health + potionsHeal, Player.MaxHealth);
+        potionsCount--;
+        potions.innerText = potionsCount+'';
     }
 }

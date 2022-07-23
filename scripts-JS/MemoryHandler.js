@@ -6,6 +6,11 @@ function MemoryInit(){
     }
 }
 
+function setInMemory(key, value) {
+    memory.setItem(key, value)
+    memory.setItem("needChange", "true")
+}
+
 let memoryUpdate = setInterval(()=>{
     if (memory.getItem("needChange") === "true"){
         switch (memory.getItem("currentWeapon")){
