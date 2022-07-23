@@ -53,3 +53,5 @@ ___
 ![image](https://user-images.githubusercontent.com/44251572/178223853-16804c2b-f2a9-4032-8f5a-e620b67cced6.png)
 20.07.2022:
 ![Example](https://user-images.githubusercontent.com/44251572/179832307-b05600c1-42a6-42c7-adfb-e78ef37dcd84.gif)
+23.07.2022:
+![Game](https://user-images.githubusercontent.com/44251572/180611631-6ec9ed73-8cd9-48f2-bcbc-33d3f3e41f3d.gif)
