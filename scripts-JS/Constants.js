@@ -35,6 +35,8 @@ let potions = document.getElementById("potionCount");
 potions.innerText = potionsCount+'';
 let nameInp = document.getElementById("nameInp");
 nameInp.value = "Player"
+let validate = document.getElementById("validate");
+validate.hidden = true;
 
 const Sword = new Weapon(100, 500, {width: 100, height: 100, offset: {x:20, y:0}}, 200,
     "./assets/Weapons/Sword.png", 9, {w: 24, h:24})
@@ -45,6 +47,15 @@ const Spear = new Weapon(50, 200, {width: 300, height: 30, offset: {x:25, y:25}}
 const Gravity = -1
 const Ground = 0.12 * canvas.offsetHeight
 let Player = new Character(PlayerSpriteParamsBattle.w, PlayerSpriteParamsBattle.h, ctx, 1000, Sword)
+
+// Аудио
+const StartMenuTheme = new Audio("./assets/Audio/StartMenu.mp3")
+const TravellingTheme = new Audio("./assets/Audio/Travelling.mp3")
+const BattleTheme = new Audio("./assets/Audio/Fight.mp3")
+const GameOverTheme = new Audio("./assets/Audio/GameOver.mp3")
+const ToDarkTheme = new Audio("./assets/Audio/to_black.mp3")
+const AttackSound = new Audio("./assets/Audio/Attack.mp3")
+
 
 const SlimeColors = [
     {
@@ -89,6 +100,7 @@ const Inputs = {
 const to_dark = () => {
     let interval = 150;
     let overlay = 1;
+    ToDarkTheme.play().then(value => {}, reason => {})
 
     setTimeout(()=>{
         ctx.fillStyle = "#333";
@@ -154,6 +166,8 @@ const GameOver = () => {
     let iter = 15;
     let step = 1;
     document.addEventListener("keydown", keydownHandler)
+    GameOverTheme.play().then(value => {}, reason => {});
+    potionsCount = 0;
 
     let drawing = setInterval(()=> {
         ctx.fillStyle = "#333"
@@ -197,6 +211,8 @@ const GameOver = () => {
     function endGameOver() {
         clearInterval(drawing)
         document.removeEventListener("keydown", keydownHandler)
+        GameOverTheme.pause();
+        GameOverTheme.currentTime = 0;
         to_dark()
 
         // Реновация персонажа
@@ -212,10 +228,10 @@ const GameOver = () => {
 
 const StartMenu = () => {
     document.addEventListener("keydown", keydownHandler)
-
     let iter = 15;
     let step = 1;
     let drawing = setInterval(()=>{
+        StartMenuTheme.play().then(value => {}, reason => {});
         ctx.fillStyle = "#333";
         ctx.fillRect(0,0,canvas.offsetWidth, canvas.offsetHeight);
         ctx.drawImage(border, 0, 0,
@@ -253,11 +269,15 @@ const StartMenu = () => {
     }
 
     function endStartMenu() {
-        clearInterval(drawing)
-        document.removeEventListener("keydown", keydownHandler)
-        to_dark()
+        clearInterval(drawing);
+        StartMenuTheme.pause();
+        StartMenuTheme.currentTime = 0;
+        StartMenuTheme.pause();
+        StartMenuTheme.currentTime = 0;
+        document.removeEventListener("keydown", keydownHandler);
+        to_dark();
         setTimeout(()=> {
-            Travel()
+            Travel();
         },1200)
     }
 }
@@ -268,4 +288,6 @@ const drinkPotion = () => {
         potionsCount--;
         potions.innerText = potionsCount+'';
     }
+    validate.hidden = false;
+    setTimeout(()=>{ validate.hidden = true }, 300);
 }

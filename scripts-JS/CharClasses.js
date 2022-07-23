@@ -80,7 +80,7 @@ class Character extends Sprite{
     update() {
         // Движение по x
         if (this.isRun){
-            Player.x += this.velocity.x;
+            this.x += this.velocity.x;
         }
         this.x = Math.min(Math.max(this.x, 0), canvas.offsetWidth - this.width)
 
@@ -105,12 +105,12 @@ class Character extends Sprite{
         // Обновления area Оружия
         if (this.direction === 1) {
             this.attack.x = this.x + this.attackOffset.x + this.weapon.area.offset.x
-            if (!Player.is_down) {
+            if (!this.is_down) {
                 this.attack.y = this.y - this.attackOffset.y + this.weapon.area.offset.y
             }
         } else {
             this.attack.x = this.x - this.attackOffset.mnsx - this.weapon.area.offset.x
-            if (!Player.is_down) {
+            if (!this.is_down) {
                 this.attack.y = this.y - this.attackOffset.y + this.weapon.area.offset.y
             }
         }
@@ -119,44 +119,44 @@ class Character extends Sprite{
         }
 
         // Обновление спрайта
-        if (Player.is_attacking) {
-            if (Player.is_down) {
-                if (Player.direction === 1) {
-                    Player.imageOffset.y = 640;
-                    Player.attack.imageOffset.y = 0;
+        if (this.is_attacking) {
+            if (this.is_down) {
+                if (this.direction === 1) {
+                    this.imageOffset.y = 640;
+                    this.attack.imageOffset.y = 0;
                 } else {
-                    Player.imageOffset.y = 720;
-                    Player.attack.imageOffset.y = Player.weapon.imageSize.h + 4;
+                    this.imageOffset.y = 720;
+                    this.attack.imageOffset.y = this.weapon.imageSize.h + 4;
                 }
             } else {
-                if (Player.direction === 1) {
-                    Player.imageOffset.y = 160;
-                    Player.attack.imageOffset.y = 0;
+                if (this.direction === 1) {
+                    this.imageOffset.y = 160;
+                    this.attack.imageOffset.y = 0;
                 } else {
-                    Player.imageOffset.y = 240;
-                    Player.attack.imageOffset.y = Player.weapon.imageSize.h + 4;
+                    this.imageOffset.y = 240;
+                    this.attack.imageOffset.y = this.weapon.imageSize.h + 4;
                 }
             }
         }
         else {
-            if (Player.is_down) {
-                if (Player.direction === 1) {
-                    Player.imageOffset.y = 480;
+            if (this.is_down) {
+                if (this.direction === 1) {
+                    this.imageOffset.y = 480;
                 } else {
-                    Player.imageOffset.y = 560;
+                    this.imageOffset.y = 560;
                 }
             } else {
-                if (Player.direction === 1) {
-                    Player.imageOffset.y = 0;
+                if (this.direction === 1) {
+                    this.imageOffset.y = 0;
                 } else {
-                    Player.imageOffset.y = 80;
+                    this.imageOffset.y = 80;
                 }
             }
-            if (!Player.on_earth) {
-                if (Player.direction === 1) {
-                    Player.imageOffset.y = 320;
+            if (!this.on_earth) {
+                if (this.direction === 1) {
+                    this.imageOffset.y = 320;
                 } else {
-                    Player.imageOffset.y = 400;
+                    this.imageOffset.y = 400;
                 }
             }
         }

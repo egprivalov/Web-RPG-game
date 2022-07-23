@@ -37,6 +37,8 @@ let memoryUpdate = setInterval(()=>{
         }
         Player.name = memory.getItem("name");
         memory.setItem("needChange", "false")
+        validate.hidden = false;
+        setTimeout(()=>{ validate.hidden = true }, 300);
     }
 },300)
 

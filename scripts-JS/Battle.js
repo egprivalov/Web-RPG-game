@@ -28,6 +28,7 @@ function BattleInit(Enemy){
 }
 
 function startBattle(Enemy) {
+    BattleTheme.play().then(value => {}, reason => {});
     Player.is_in_fight = true;
     Enemy.is_in_fight = true;
 
@@ -142,6 +143,7 @@ function startBattle(Enemy) {
             case Inputs["Attack"]: {
                 if (!this.is_attacking && !this.is_resting) {
                     Player.do_attack(Enemy);
+                    AttackSound.play().then(value => {}, reason => {})
                 }
                 return;
             }
@@ -171,7 +173,9 @@ function startBattle(Enemy) {
     }
 
     function endBattle() {
-        to_dark()
+        to_dark();
+        BattleTheme.pause();
+        BattleTheme.currentTime = 0;
         clearInterval(drawingBattle);
         document.removeEventListener('keydown', keydownHandler)
         document.removeEventListener('keyup', keyupHandler)

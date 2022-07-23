@@ -18,14 +18,13 @@ function TravelInit(){
         h: 20
     }
     Player.frameMax = 3;
-
     potionsCount++;
     potions.innerText = potionsCount+'';
 }
 
 function Travel(){
+    TravellingTheme.play().then(value => {}, reason => {});
     let isMoving = false;
-
     let travelling = setInterval(()=>{
         Field.forEach(field => field.draw());
         ctx.drawImage(TravelBackground,
@@ -155,7 +154,9 @@ function Travel(){
     }
 
     function endTravel() {
-        to_dark()
+        to_dark();
+        TravellingTheme.pause();
+        TravellingTheme.currentTime = 0;
         clearInterval(travelling);
         document.removeEventListener("keydown", keydownHandler);
     }
