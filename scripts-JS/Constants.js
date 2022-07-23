@@ -11,7 +11,7 @@ const memoryBasic = [
     ["prevWorldReached", "0"],
     ["maxWorldReached", "0"],
     ["currentWeapon", "Sword"],
-    ["needChange", "false"],
+    ["needChange", "true"],
 ]
 const border = new Image();
 border.src = "assets/game-over-border.png";
@@ -34,7 +34,7 @@ let potionsCount = 0;
 let potions = document.getElementById("potionCount");
 potions.innerText = potionsCount+'';
 let nameInp = document.getElementById("nameInp");
-nameInp.value = "Player"
+nameInp.value = memory.getItem("name");
 let validate = document.getElementById("validate");
 validate.hidden = true;
 

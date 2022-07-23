@@ -1,6 +1,6 @@
 function MemoryInit(){
     for (let key_value of memoryBasic){
-        if (memory.getItem(key_value[0]) !== key_value[1]){
+        if (memory.getItem(key_value[0]) === null){
             memory.setItem(key_value[0], key_value[1]);
         }
     }
@@ -36,6 +36,7 @@ let memoryUpdate = setInterval(()=>{
             }
         }
         Player.name = memory.getItem("name");
+        nameInp.value = Player.name;
         memory.setItem("needChange", "false")
         validate.hidden = false;
         setTimeout(()=>{ validate.hidden = true }, 300);
