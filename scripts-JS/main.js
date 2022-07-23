@@ -1,0 +1,4 @@
+MemoryInit()
+CreateField()
+TravelInit()
+StartMenu()
